@@ -6,6 +6,17 @@ services:
     container_name: tacobell-delivery-api
     build: .
     ports:
-      - "80:1337"
+      - "1337:1337"
     volumes:
       - .:/src/app
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - tacobell-delivery-api
