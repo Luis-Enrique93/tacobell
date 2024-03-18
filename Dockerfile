@@ -10,6 +10,8 @@ COPY package*.json ./
 # Debug: List files in current directory
 RUN ls -la
 
+CMD ["ls"]
+
 # Install app dependencies
 RUN npm install
 
