@@ -1,20 +1,17 @@
-FROM node:latest
-# - this app listens on port 3000, but the container should launch on port 80
-  #  so it will respond to http://localhost:80 on your computer
-EXPOSE 1337
-# - then it should use alpine package manager to install tini: 'apk add --update tini'
-# RUN apk add --update tini
-# - then it should create directory /usr/src/app for app files with 'mkdir -p /usr/src/app'
-RUN mkdir -p /usr/src/app
-# - Node uses a "package manager", so it needs to copy in package.json file
+# Base image
+FROM node:18
+
+# Create app directory
 WORKDIR /usr/src/app
-COPY package.json package.json 
-# - then it needs to run 'npm install' to install dependencies from that file
-RUN npm install && npm cache clean --force && npm install sails -g
-# - to keep it clean and small, run 'npm cache clean --force' after above
-# - then it needs to copy in all files from current directory
+
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Bundle app source
 COPY . .
-# - then it needs to start container with command 'tini -- node ./bin/www'
-# CMD ["forever", "start" ,"./app.js","--prod"]
-# CMD ["node","./app.js","--prod"]
-CMD ["node","./app.js"]
+
+# Start the server using the production build
+CMD [ "node", "app.js" ]
