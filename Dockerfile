@@ -14,4 +14,4 @@ RUN npm install
 COPY . .
 
 # Start the server using the production build
-CMD [ "node", "app.js" ]
+CMD [ "npm", "run", "dev" ]
