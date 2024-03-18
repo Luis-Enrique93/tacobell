@@ -10,8 +10,17 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
+# Debug: List installed packages
+RUN npm list
+
+# Debug: List files in current directory
+RUN ls -la
+
 # Bundle app source
 COPY . .
+
+# Debug: List files in current directory after copying app source
+RUN ls -la
 
 # Start the server using the production build
 CMD [ "node", "app.js" ]
