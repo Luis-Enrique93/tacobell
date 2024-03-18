@@ -7,25 +7,11 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
 
-# Debug: List files in current directory
-RUN ls -la
-
-CMD ["ls"]
-
 # Install app dependencies
-RUN npm install
-
-# Debug: List installed packages
-RUN npm list
-
-# Debug: List files in current directory
-RUN ls -la
+RUN npm install && npm cache clean --force && npm install sails -g
 
 # Bundle app source
 COPY . .
 
-# Debug: List files in current directory after copying app source
-RUN ls -la
-
 # Start the server using the production build
-CMD [ "node", "app.js" ]
+CMD [ "node", "./app.js" ]
