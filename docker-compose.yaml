@@ -1,0 +1,13 @@
+version: '3.5'
+
+
+services:
+  tacobell-delivery-api:
+    container_name: tacobell-delivery-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+      - .:/usr/src/app
